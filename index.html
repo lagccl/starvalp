@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Galáctico - Carta de Precios</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="%23333"/><circle cx="40" cy="30" r="0.5" fill="%23333"/><circle cx="70" cy="20" r="0.7" fill="%23333"/><circle cx="90" cy="60" r="0.8" fill="%23333"/></svg>');
+            background-size: 300px 300px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Encabezado */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #ffe81f;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            font-family: 'Star Jedi', Arial, sans-serif;
+            font-size: 3.5rem;
+            color: #ffe81f;
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            font-style: italic;
+        }
+        
+        /* Navegación */
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background-color: #222;
+            color: #ffe81f;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background-color: #ffe81f;
+            color: #000;
+        }
+        
+        /* Contenido principal */
+        .menu-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .menu-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: #ffe81f;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+        
+        /* Items del menú */
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .menu-item {
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 232, 31, 0.2);
+        }
+        
+        .item-name {
+            font-size: 1.3rem;
+            color: #ffe81f;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .item-price {
+            font-weight: bold;
+        }
+        
+        .item-description {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .item-tags {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background-color: #333;
+            color: #ffe81f;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #444;
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Efectos especiales */
+        .star-wars-border {
+            position: relative;
+            padding: 10px;
+        }
+        
+        .star-wars-border::before, .star-wars-border::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffe81f;
+        }
+        
+        .star-wars-border::before {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .star-wars-border::after {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .imagen-izquierda {
+            float: left;
+            margin-right: 1px; /* Opcional: añade espacio a la derecha de la imagen */
+            margin-bottom: 1px; /* Opcional: añade espacio debajo de la imagen */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Fuente Star Wars */
+        @font-face {
+            font-family: 'Star Jedi';
+            src: url('https://fonts.cdnfonts.com/s/2558/Starjedi.woff') format('woff');
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.png" alt="texto_alternativo" class="imagen-izquierda">
+           
+                <h1 class="logo">STAR VALP</h1>
+                <p class="subtitle">"Que la Fuerza te acompañe... y el apetito también"</p>
+           
+        </header>
+        
+        <nav>
+            <button class="nav-btn active" data-target="entradas">Empanadas</button>
+            <button class="nav-btn" data-target="platos-fuertes">Platos Fuertes</button>
+            <button class="nav-btn" data-target="carnes">Carnes</button>
+            <button class="nav-btn" data-target="bebidas">Bebidas</button>
+            <button class="nav-btn" data-target="bar-express">Bar Express</button>
+            <button class="nav-btn" data-target="postres">Postres</button>
+            <button class="nav-btn" data-target="especiales">Especiales Jedi</button>
+        </nav>
+        
+        <main>
+            <!-- Sección de Entradas -->
+            <section id="entradas" class="menu-section active">
+                <h2 class="section-title">EMPANADAS INTERGALÁCTICAS</h2>
+                <div class="menu-items">
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Empanada de Queso</span>
+                            <span class="item-price">$3.000</span>
+                        </div>
+                        <div class="item-description">
+                            Empanada Frita de Queso.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Empanada de Mariscos</span>
+                            <span class="item-price">$4.000</span>
+                        </div>
+                        <div class="item-description">
+                            Empanada Frita de pino de mariscos.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Empanada de Camaron Queso</span>
+                            <span class="item-price">$4.500</span>
+                        </div>
+                        <div class="item-description">
+                            Empanada Frita de camarones con queso.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Empanada de Mariscos Queso</span>
+                            <span class="item-price">$4.500</span>
+                        </div>
+                        <div class="item-description">
+                            Empanada Frita de pino de mariscos y queso.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Platos Fuertes -->
+            <section id="platos-fuertes" class="menu-section">
+                <h2 class="section-title">PLATOS FUERTES DE LA GALAXIA</h2>
+                <div class="menu-items">
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Paila Marina</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Paila Marina Especial</span>
+                            <span class="item-price">$16.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Calugas de Pescado</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Camarones Fritos</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Camarones al Pil Pil</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Chupe de Mariscos</span>
+                            <span class="item-price">$16.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Chupe de Locos</span>
+                            <span class="item-price">$22.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Chupe de Camarones</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Palta Reina</span>
+                            <span class="item-price">$15.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Palta Cardenal</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Chorrillana de Mariscos</span>
+                            <span class="item-price">$26.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Mariscal Frio</span>
+                            <span class="item-price">$20.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Papas Fritas Familiar</span>
+                            <span class="item-price">$6.500</span>
+                        </div>
+
+                        <div class="item-description">
+                            ........
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Mariscos</span>
+                            <span class="tag">Especialidad</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Reineta Frita/Plancha C/A</span>
+                            <span class="item-price">$14.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Reineta Parmesana C/A</span>
+                            <span class="item-price">$15.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Reineta a lo Pobre</span>
+                            <span class="item-price">$17.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Ceviche de Reineta</span>
+                            <span class="item-price">$16.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Ceviche de Salmon</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Mix Ceviches Rei-Sal-Cam</span>
+                            <span class="item-price">$24.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Jardín de Mariscos</span>
+                            <span class="item-price">$26.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Locos a la Orden</span>
+                            <span class="item-price">$24.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Pastel de Jaibas</span>
+                            <span class="item-price">$17.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Paella Individual</span>
+                            <span class="item-price">$17.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Sopa de Mariscos</span>
+                            <span class="item-price">$4.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Agregado Adicional</span>
+                            <span class="item-price">$3.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Ensalada Surtida Familiar</span>
+                            <span class="item-price">$7.500</span>
+                        </div>
+
+                        <div class="item-description">
+                            .......................
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Mariscos</span>
+                            <span class="tag">Saludable</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Merluza C/Agregado..............</span>
+                            <span class="item-price">$10.000</span><n>
+                        </div>
+                        <div class="item-name">
+                            <span>Merluza a lo Pobre</span>
+                            <span class="item-price">$13.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Trilogia Pescados del día C/A</span>
+                            <span class="item-price">$15.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Congrio Frito C/A</span>
+                            <span class="item-price">$16.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Caldillo de Congrio</span>
+                            <span class="item-price">$17.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Congrio a lo Pobre</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Machas a la Parmesana</span>
+                            <span class="item-price">$21.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Ostiones a la Parmesana</span>
+                            <span class="item-price">$22.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Mix Parmesano</span>
+                            <span class="item-price">$24.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Salmón Con Agregado</span>
+                            <span class="item-price">$16.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Salmón a la Parmensana</span>
+                            <span class="item-price">$17.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Salmón a lo Pobre</span>
+                            <span class="item-price">$19.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Plato Vegetariano</span>
+                            <span class="item-price">$19.000</span>
+                        </div>
+
+                        <div class="item-description">
+                            .
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Pescados</span>
+                            <span class="tag">Saludable</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="carnes" class="menu-section active">
+                <h2 class="section-title">CARNES GALÁCTICAS</h2>
+                <div class="menu-items">
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Lomo con Agregado</span>
+                            <span class="item-price">$16.000</span>
+                        </div>
+                        <div class="item-description">
+                            Tierno Lomo de res a la parrilla, servido con agregados a su elección.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Pollo con Agregado</span>
+                            <span class="item-price">$10.000</span>
+                        </div>
+                        <div class="item-description">
+                            Pollo Asado, servido con agregados a su elección
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Chuleta Con Agregado</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <div class="item-description">
+                            Chuleta frita con agregado a su elección.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Lomo a lo Pobre</span>
+                            <span class="item-price">$19.000</span>
+                        </div>
+                        <div class="item-description">
+                            Lomo de Res frito, acompañado de papas fritas, huevo frito y cebolla caramelizada
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Pollo a lo Pobre</span>
+                            <span class="item-price">$13.000</span>
+                        </div>
+                        <div class="item-description">
+                            Pollo asado, acompañado de papas fritas, huevo frito y cebolla caramelizada
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Chuleta a lo Pobre</span>
+                            <span class="item-price">$15.000</span>
+                        </div>
+                        <div class="item-description">
+                            Chuleta de cerdo, acompañado de papas fritas, huevo frito y cebolla caramelizada
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Chorrillana de Carne (2P)</span>
+                            <span class="item-price">$24.000</span>
+                        </div>
+                        <div class="item-description">
+                            Mezcla de carnes fritas, acompañado de papas fritas, huevo frito y cebolla
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Fritos</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Sección de Bebidas -->
+            <section id="bebidas" class="menu-section">
+                <h2 class="section-title">BEBIDAS DE LA FUERZA</h2>
+                <div class="menu-items">
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Sauvignon Blanc Varietal</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cabernet Sauvignon Varietal</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Carmenere Varietal</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Reserva Cabernet Sauvignon</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Gato Premium</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Varietal Misiones de Rengo</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Reserva Casillero del Diablo</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Reserva Misiones de Rengo</span>
+                            <span class="item-price">$18.000</span>
+                        </div>
+                        <div class="item-description">
+                            La icónica bebida de Tatooine, una refrescante mezcla de leche y sabores tropicales.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Refrescante</span>
+                            <span class="tag">Alcohol</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Cerveza Escudo/Cristal</span>
+                            <span class="item-price">$2.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Royal Guard</span>
+                            <span class="item-price">$3.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Corona/Budweiser</span>
+                            <span class="item-price">$3.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Heinekenm,Coors</span>
+                            <span class="item-price">$3.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Stella,Sol,Miller</span>
+                            <span class="item-price">$3.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Kunstmann Toro Bayo</span>
+                            <span class="item-price">$4.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Austral</span>
+                            <span class="item-price">$4.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Vaso Michelado</span>
+                            <span class="item-price">$1.000</span>
+                        </div>
+                        <div class="item-description">
+                            Cerveza artesanal rubia con un toque especial de especias del Borde Exterior.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Alcohol</span>
+                            <span class="tag">Artesanal</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Bebidas</span>
+                            <span class="item-price">$2.500</span>
+                        </div>
+                        <div class="item-description">
+                            Individuales Coca Cola,Fanta,Sprite,Bilz,Pap,Kem, Mineral, etc.
+                        </div>
+                        <div class="item-name">
+                            <span>Jugos Naturales</span>
+                            <span class="item-price">$4.000</span>
+                        </div>
+                        <div class="item-description">
+                            Frutilla, Mango, Piña,Durazno, etc., Limonada
+                        </div>
+                        <div class="item-name">
+                            <span>Te, Café, Infusiones</span>
+                            <span class="item-price">$2.000</span>
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Gaseosa</span>
+                            <span class="tag">Picante</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Bar express -->
+            <section id="bar-express" class="menu-section">
+                <h2 class="section-title">BEBIDAS DE LA FUERZA</h2>
+                <div class="menu-items">
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Pisco Sour</span>
+                            <span class="item-price">$5.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Pisco Sour Catedral</span>
+                            <span class="item-price">$7.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Vaina</span>
+                            <span class="item-price">$5.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Aperol</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Gin</span>
+                            <span class="item-price">$5.000</span>
+                        </div>
+                      
+                        <div class="item-name">
+                            <span>Piña Colada</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Ramazzoti</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+
+                        <div class="item-description">
+                            La icónica bebida de Tatooine, una refrescante mezcla de leche y sabores tropicales.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Refrescante</span>
+                            <span class="tag">Alcohol</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Mojito</span>
+                            <span class="item-price">$5.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Mojito Sabores</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Mojito Infantil</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Heinekenm,Coors</span>
+                            <span class="item-price">$3.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Stella,Sol,Miller</span>
+                            <span class="item-price">$3.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Kunstmann Toro Bayo</span>
+                            <span class="item-price">$4.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Cerveza Austral</span>
+                            <span class="item-price">$4.500</span>
+                        </div>
+                        <div class="item-name">
+                            <span>Vaso Michelado</span>
+                            <span class="item-price">$1.000</span>
+                        </div>
+                        <div class="item-description">
+                            Cerveza artesanal rubia con un toque especial de especias del Borde Exterior.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Alcohol</span>
+                            <span class="tag">Artesanal</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Bebidas</span>
+                            <span class="item-price">$2.500</span>
+                        </div>
+                        <div class="item-description">
+                            Individuales Coca Cola,Fanta,Sprite,Bilz,Pap,Kem, Mineral, etc.
+                        </div>
+                        <div class="item-name">
+                            <span>Jugos Naturales</span>
+                            <span class="item-price">$4.000</span>
+                        </div>
+                        <div class="item-description">
+                            Frutilla, Mango, Piña,Durazno, etc., Limonada
+                        </div>
+                        <div class="item-name">
+                            <span>Te, Café, Infusiones</span>
+                            <span class="item-price">$2.000</span>
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Gaseosa</span>
+                            <span class="tag">Picante</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Postres -->
+            <section id="postres" class="menu-section">
+                <h2 class="section-title">POSTRES DEL LADO OSCURO</h2>
+                <div class="menu-items">
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Pastel de la Muerte</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+                        <div class="item-description">
+                            Torta de chocolate oscuro con relleno de frambuesa y cubierta de ganache.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Chocolate</span>
+                            <span class="tag">Intenso</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Helado de Wookiee</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+                        <div class="item-description">
+                            Helado de vainilla, chocolate y frutilla con trozos de galleta de chocolate y salsa de caramelo.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Helado</span>
+                            <span class="tag">Dulce</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Duraznos con crema de la Princesa Leia</span>
+                            <span class="item-price">$6.000</span>
+                        </div>
+                        <div class="item-description">
+                            Suaves duraznos en conserva, con crema, decoración inspirada en los moños de Leia.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Queso</span>
+                            <span class="tag">Frutas</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Especiales -->
+            <section id="especiales" class="menu-section">
+                <h2 class="section-title">ESPECIALES JEDI</h2>
+                <div class="menu-items">
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Combo Maestro Yoda</span>
+                            <span class="item-price">$29.99</span>
+                        </div>
+                        <div class="item-description">
+                            Plato principal + entrada + postre + bebida. Perfecto para completar tu entrenamiento Jedi.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Combo</span>
+                            <span class="tag">Completo</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Banquete de la Alianza Rebelde</span>
+                            <span class="item-price">$49.99</span>
+                        </div>
+                        <div class="item-description">
+                            Para 2 personas: 2 entradas, 2 platos principales, 1 postre para compartir y 2 bebidas.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Parejas</span>
+                            <span class="tag">Compartir</span>
+                        </div>
+                    </div>
+
+                    <div class="menu-item star-wars-border">
+                        <div class="item-name">
+                            <span>Menú Infantil Ewok</span>
+                            <span class="item-price">$12.99</span>
+                        </div>
+                        <div class="item-description">
+                            Para los pequeños padawans: nuggets, papas fritas, bebida y postre sorpresa.
+                        </div>
+                        <div class="item-tags">
+                            <span class="tag">Niños</span>
+                            <span class="tag">Diversión</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2025 Cantina Galáctica - Todos los derechos reservados en toda la galaxia</p>
+            <p>Horario: Lunes a Domingo de 12:00 a 20:00</p>
+            <p>Reservas: 1-800-CANTINA-GALACTICA</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navegación entre secciones
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const menuSections = document.querySelectorAll('.menu-section');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    
+                    // Remover clase active de todos los botones y secciones
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    menuSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Agregar clase active al botón clickeado y a la sección correspondiente
+                    this.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
